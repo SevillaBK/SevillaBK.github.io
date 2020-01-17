@@ -1,7 +1,7 @@
 # Site
-title:              Che1's Blog
-bio:                'Gather ye rosebuds while ye may...'
-description:        "Che1's Dev Blog"
+title:              Injordy Blog
+bio:                '데이터 사이언스 스터디 로그'
+description:        "Data Science Blog"
 reading_time:       true
 words_per_minute:   200
 logo:               'assets/img/logo.png'
@@ -27,7 +27,7 @@ sass:
   style:            compressed
 
 # Comments
-disqus_shortname:   nachwon
+disqus_shortname:   Bogook Chae
 
 # Social
 # if you don't have any of social below, comment the line.
@@ -40,20 +40,20 @@ disqus_shortname:   nachwon
 #bing-verify:
 #email:
 # twitter:            username
-facebook:           nachwon
-github-url:         nachwon
+# facebook:           username
+github-url:         SevillaBK
 #stackoverflow:     123456/username   from a "http://stackoverflow.com/users/123456/username" link
 #linkedin:          username
 #xing:              username
-instagram:          _che1
+#instagram:          _che1
 #lastfm:            username
 #tumblr:            username
 #medium:            '@username'
 #pinterest:         username
 #foursquare:        username
-steam:              76561198005689159
+#steam:             username
 #dribbble:          username
-youtube:            nachwon
+#youtube:            username
 #youtube-channel:   channel
 #soundcloud:        username
 #weibo:             username
