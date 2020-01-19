@@ -1,3 +1,15 @@
+# 데이터 사이언스 블로그
+공부한 내용들으 조금씨 정리해나가려느 블로그입니다.
+
+아래 내용은 지킬 블로그 원 테마에 관한 내용입니다.
+
+
+
+---------------------------------------
+
+
+
+
 # Moon Jekyll Theme [![Donate](https://img.shields.io/badge/paypal-donate-blue.svg)](https://www.paypal.me/taylantatli/0usd)  
   
 ## `Sorry guys but there will be no update until I buy a new laptop.`
