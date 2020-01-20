@@ -55,7 +55,8 @@ print(value, ..., sep = ' ', end ='\n')
 print()
 print(a, b)
 print(a, 10, 200, b)
-
+```
+```
 # 출력: 
 10 11.4
 10 10 200 11.4
@@ -67,7 +68,8 @@ print(a, 10, 200, b)
 
 ```python
 print(a, b, 10, 100, sep='*', end='!!'))
-
+```
+```
 # 출력:
 10*11.4*10*100!!
 ```
@@ -84,7 +86,8 @@ a = 10
 b = 11.4
 print(a)
 b
-
+```
+```
 # 출력:
 10
 11.4
@@ -135,7 +138,8 @@ except
 a = 10 
 b = 11.45
 type(a), type(b)
-
+```
+```
 # 출력:
 (int, float)
 ```
@@ -149,7 +153,8 @@ type(a), type(b)
 ```python
 c = None
 print(c)
-
+```
+```
 # 출력:
 None
 ```
@@ -172,7 +177,8 @@ print(a==b)
 print(a<=b)
 print(a>=b)
 print(a!=b)
-
+```
+```
 # 출력:
 True
 False
@@ -186,7 +192,8 @@ True
 c = a > b
 print(type(c))
 print(c)
-
+```
+```
 # 출력:
 <class 'bool'>
 True
@@ -208,7 +215,8 @@ print(a / b) # 나누기 : 1.66666...
 print(a % b) # 나머지 : 2
 print(a // b) # 몫 : 1
 print(a ** b) # a의 b제곱 : 125
-
+```
+```
 # 출력:
 8
 15
@@ -230,7 +238,8 @@ a = 5
 b = 4
 print(a + b * 4)
 print((a + b) * 4)
-
+```
+```
 # 출력:
 21
 36
@@ -256,7 +265,7 @@ print(a)
 # -= : 우측에 있는 값을 뺀 값으로 대체합니다.
 a = 9
 a -= 3
-    print(a)
+print(a)
     
 # += : 우측에 있는 값을 더한 값으로 대체합니다.
 a = 9
@@ -272,7 +281,8 @@ print(a)
 a = 9
 a **= 3
 print(a)
-
+```
+```
 # 출력:
 9
 6
