@@ -4,8 +4,8 @@ title: '[사이킷런] 사이킷런의 기본 프레임워크'
 excerpt: 사이킷런의 사용하기 위해 기본 구조를 학습해보자
 category: MachineLearning
 tags:
-  - 사이킷런
-  - 머신러닝
+  - sklearn
+  - MachineLearning
 
 ---
 
