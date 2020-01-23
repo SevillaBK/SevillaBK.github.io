@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[Keras] 케라스 딥러닝 모델 작성순서'
+title: '[케라스] 딥러닝 모델 작성순서'
 excerpt: 케라스로 딥러닝 모델을 만들어 나가는 기본 과정을 대략적으로 알아보자
 category: DeepLearning
 tags:
