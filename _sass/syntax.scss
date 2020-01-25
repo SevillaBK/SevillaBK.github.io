@@ -35,7 +35,7 @@ pre.highlight {
 	.kr                { color: #66d9ef }                            /* Keyword.Reserved            */
 	.kt                { color: #66d9ef }                            /* Keyword.Type                */
 	.ld                { color: #e6db74 }                            /* Literal.Date                */
-	.m                 { color: #e6db74 }                            /* Literal.Number              */
+	.m                 { color: #ff66ff }                            /* Literal.Number              */
 	.s                 { color: #e6db74 }                            /* Literal.String              */
 	.na                { color: #a6e22e }                            /* Name.Attribute              */
 	.nb                { color: #f8f8f2 }                            /* Name.Builtin                */
@@ -53,10 +53,10 @@ pre.highlight {
 	.nv                { color: #f8f8f2 }                            /* Name.Variable               */
 	.ow                { color: #f92672 }                            /* Operator.Word               */
 	.w                 { color: #f8f8f2 }                            /* Text.Whitespace             */
-	.mf                { color: #e6db74 }                            /* Literal.Number.Float        */
-	.mh                { color: #e6db74 }                            /* Literal.Number.Hex          */
-	.mi                { color: #e6db74 }                            /* Literal.Number.Integer      */
-	.mo                { color: #e6db74 }                            /* Literal.Number.Oct          */
+	.mf                { color: #ff66ff }                            /* Literal.Number.Float        */
+	.mh                { color: #ff66ff }                            /* Literal.Number.Hex          */
+	.mi                { color: #ff66ff }                            /* Literal.Number.Integer      */
+	.mo                { color: #ff66ff }                            /* Literal.Number.Oct          */
 	.sb                { color: #e6db74 }                            /* Literal.String.Backtick     */
 	.sc                { color: #e6db74 }                            /* Literal.String.Char         */
 	.sd                { color: #e6db74 }                            /* Literal.String.Doc          */
