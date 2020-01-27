@@ -25,8 +25,7 @@ tags:
 * `테스트 데이터셋(test set)` : 생성된 모델의 예측성능을 평가하는데 사용됩니다. 학습과 튜닝에는 이용되지 않고, 미래의 타겟 값이 관측되지 않은 데이터라 가정하여 예측이 잘 되는지 평가하는데 사용됩니다.
 
 
-
-![split](/img/ML&DL/train-valid-test.png)
+<img src="https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/train-valid-test.png?raw=true" width="90%"></img>
 
 
 
