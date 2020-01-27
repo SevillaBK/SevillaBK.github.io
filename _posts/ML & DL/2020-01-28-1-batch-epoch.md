@@ -1,12 +1,13 @@
 ---
 layout: post
-title: '[케라스] 딥러닝 모델 학습과정'
-excerpt: 케라스로 딥러닝 모델을 만들었을 때, 어떻게 학습이 수행되는지 알아보자
+title: '[케라스] 딥러닝 모델 학습-batch size와 epoch'
+excerpt: 케라스 모델에서 batch size와 epoch의 개념 학습
 category: ML & DL
 tags:
   - 딥러닝
   - Keras
-
+  - batch
+  - epoch
 ---
 
 김태영님의 `블록과 함께 하는 파이썬 딥러닝 케라스` 를 학습하며 정리하는 내용입니다.
