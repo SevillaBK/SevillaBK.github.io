@@ -1,12 +1,13 @@
 ---
 layout: post
-title: '데이터셋-train, test, validation'
+title: '데이터셋의 분리-train, test, validation'
 excerpt: ML/DL 모델 학습을 위한 데이터셋 관련 개념 학습
 category: ML & DL
 tags:
   - 머신러닝
   - 딥러닝
-  - train, test, valiation
+  - train_test_split
+  - model_selection
 ---
 
 
@@ -25,7 +26,7 @@ tags:
 
 
 
-![train-valid-test](https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML%26DL/train-valid-test.png)
+![split](/img/ML&DL/train-valid-test.png)
 
 
 
