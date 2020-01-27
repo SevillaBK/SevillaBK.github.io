@@ -1,6 +1,6 @@
 ---
 layout: post
-title: '[기초개념] 데이터셋-train, test, validation'
+title: '데이터셋-train, test, validation'
 excerpt: ML/DL 모델 학습을 위한 데이터셋 관련 개념 학습
 category: ML & DL
 tags:
