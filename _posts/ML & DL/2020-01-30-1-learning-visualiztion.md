@@ -133,7 +133,7 @@ Epoch 1000/1000
 700/700 [==============================] - 0s 71us/step - loss: 0.3583 - accuracy: 0.9100 - val_loss: 3.0788 - val_accuracy: 0.5233
 ```
 
-<img src = 'https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/learning-vis.png?raw=true' width = 80%>
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/learning-vis.png?raw=true" width = 80%>
 
 위의 그림과 같이 matplotlib을 이용하면 한 눈에 학습의 추이를 파악할 수 있습니다.<br/>학습셋에 대한 loss와 accuracy는 계속 향상되지만 검증셋에 대한 loss와 accuracy는 각각 100번째 에포크, 200번째 에포크 정도에서 떨어지는(오버피팅되는) 현상을 볼 수 있습니다.
 
