@@ -101,7 +101,6 @@ acc_ax = loss_ax.twinx()
 
 loss_ax.plot(hist.history['loss'], 'y', label = 'train loss')
 loss_ax.plot(hist.history['val_loss'], 'r', label = 'val loss')
-
 acc_ax.plot(hist.history['accuracy'], 'b', label = 'train accuracy')
 acc_ax.plot(hist.history['val_accuracy'], 'g', label = 'valid accuracy')
 
@@ -113,6 +112,7 @@ loss_ax.legend(loc='upper left')
 acc_ax.legend(loc='lower left')
 
 plt.show()
+
 ```
 
 ```
