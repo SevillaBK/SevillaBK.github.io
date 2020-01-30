@@ -79,7 +79,9 @@ Y_val = Y_val[val_rand_idxs]
 Y_train = np_utils.to_categorical(Y_train)
 Y_val = np_utils.to_categorical(Y_val)
 Y_test = np_utils.to_categorical(Y_test)
+```
 
+```python
 # 2. 모델 구성하기
 model = Sequential()
 model.add(Dense(units = 5, input_dim = 28 * 28, activation = 'relu'))
