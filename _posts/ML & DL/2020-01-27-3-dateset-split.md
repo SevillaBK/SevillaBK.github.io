@@ -62,7 +62,11 @@ print('레이블 데이터셋의 shape: 'label.shape)
 from sklearn.model_selection import train_test_split
 
 # 데이터셋 나누기
-X_train, X_test, y_train, y_test = train_test_split(data, label, test_size = 0.25, shuffle = True, random_state = 21)
+X_train, X_test, y_train, y_test = train_test_split(data, 
+                                                    label, 
+                                                    test_size = 0.25, 
+                                                    shuffle = True, 
+                                                    random_state = 21)
 
 # 나누어진 데이터셋 확인
 print('학습셋의 shape: ', X_train.shape)
