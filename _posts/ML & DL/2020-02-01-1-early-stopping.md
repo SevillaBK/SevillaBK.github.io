@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[케라스] 딥러닝 모델 학습 조기 종료시키기(early stopping)'
-excerpt: 딥러닝모델의 학습과정을 matplotlib을 활용해 확인해보자
+excerpt: 딥러닝모델이 과적합되기 전에 모델 학습을 조기 종료시켜보자.
 category: ML & DL
 tags:
   - 딥러닝
