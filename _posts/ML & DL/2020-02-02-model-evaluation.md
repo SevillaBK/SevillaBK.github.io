@@ -38,7 +38,7 @@ plt.title('Number of Survived with Sex')
 plt.show()
 ```
 
-<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/titanic.png?raw=true" width = "300" height = "200">
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/titanic.png?raw=true" width = "350" height = "250">
 
 Survived 가 1이 생존자를 나타내는데, 위의 그래프에서 보는 것 처럼 생존자 중 여성의 비중이 확연히 높습니다. 이런 경우에는 단순히 성별에 따라 생존자를 분류해도 정확도가 높게 나올 수 있습니다.
 
@@ -140,7 +140,7 @@ Dummy Classifier의 정확도:  0.8212
 
 `혼동행렬(Confusion Matrix)` 은 분류문제에서 예측 오류가 얼마나 되고, 어떤 유형의 오류가 발생하는지를 보여주는 행렬로 아래와 같은 배열을 가지고 있습니다.
 
-<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/confusion%20matrix.jpg?raw=true" width ="60%">
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/confusion%20matrix.jpg?raw=true" width = "400" height = "300">
 
 그 후, 학습셋과 검증데이터셋 전체를 다시 학습하여 테스트셋에 대해 예측을 수행합니다. 이를 통해 학습하지 않은 데이터에 대해서도 모델의 성능이 잘 나오는지 확인합니다.
 
@@ -425,7 +425,7 @@ def precision_recall_curve_plot(y_test, predict_proba_c1):
 precision_recall_curve_plot(y_test, clf.predict_proba(X_test)[:, 1])
 ```
 
-<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/precision-recall-curve.png?raw=true" width = "60%">
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/precision-recall-curve.png?raw=true" width = "350" height = "300">
 
 위 그래프를 보면 임계값을 높임에 따라 정밀도는 개선되지만, 재현율은 나빠짐을 한눈에 알 수 있습니다.
 
@@ -597,7 +597,7 @@ pred_proba = clf.predict_proba(X_test)
 precision_recall_curve_plot(y_test, pred_proba[:, 1])
 ```
 
-<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/precision-recall-f1.png?raw=true" width = "60%">
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/precision-recall-f1.png?raw=true" width = "350" height = "300">
 
 위의 그래프를 보면, f1 score 는 민감도와 재현율이 적절히 균형을 맞춘 지점에서 가장 높게 나타남을 알 수 있습니다.
 
@@ -610,7 +610,7 @@ ROC곡선은 False Positive Rate(FPR)이 변할 때 True Positive Rate(TPR)이 �
 * False Positive Rate : 음성 중 양성으로 잘못 판정한 것의 비율
 * True Positive Rate : 양성 중 양성으로 잘 판정한 것의 비율
 
-<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/ROC-curve.png?raw=true" width = "60%">
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/ROC-curve.png?raw=true" width = "350" height = "300">
 
 위의 그림은 ROC 곡선의 예시로 가운데 대각선은 무작위로 분류를 하는 분류기의 ROC 곡선입니다.
 곡선이 가운데 대각선에 가까울수록 성능이 떨어지며 멀어질수록 성능이 뛰어난 것입니다.
@@ -669,7 +669,7 @@ def roc_curve_plot(y_test, pred_proba_c1):
 roc_curve_plot(y_test, pred_proba[:, 1])
 ```
 
-<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/ROC-Titanic.png?raw=true" width = "60%">
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/ROC-Titanic.png?raw=true" width = "350" height = "300">
 
 일반적으로 ROC 곡선 자체는 FPR과 TPR의 변화 값을 보는데 이용하며 분류의 성능지표로는 ROC 면적에 기반한 AUC 값으로 결정합니다.
 
