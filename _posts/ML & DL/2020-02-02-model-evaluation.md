@@ -38,7 +38,7 @@ plt.title('Number of Survived with Sex')
 plt.show()
 ```
 
-<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/titanic.png?raw=true" width = "60%">
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/titanic.png?raw=true" width = "300" height = "200">
 
 Survived 가 1이 생존자를 나타내는데, 위의 그래프에서 보는 것 처럼 생존자 중 여성의 비중이 확연히 높습니다. 이런 경우에는 단순히 성별에 따라 생존자를 분류해도 정확도가 높게 나올 수 있습니다.
 
@@ -140,7 +140,7 @@ Dummy Classifier의 정확도:  0.8212
 
 `혼동행렬(Confusion Matrix)` 은 분류문제에서 예측 오류가 얼마나 되고, 어떤 유형의 오류가 발생하는지를 보여주는 행렬로 아래와 같은 배열을 가지고 있습니다.
 
-<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/confusion%20matrix.jpg?raw=true" width ="50%">
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/confusion%20matrix.jpg?raw=true" width ="60%">
 
 그 후, 학습셋과 검증데이터셋 전체를 다시 학습하여 테스트셋에 대해 예측을 수행합니다. 이를 통해 학습하지 않은 데이터에 대해서도 모델의 성능이 잘 나오는지 확인합니다.
 
@@ -638,6 +638,7 @@ print('샘플 임계값별 TPR: ', np.round(tpr[thr_index], 3))
 ```
 
 ```
+# 출력: 
 샘플 추출된 임계값 배열의 index 10개:  [ 1  6 11 16 21 26 31 36 41 46 51]
 샘플용 10개의 임계값:  [0.95 0.69 0.66 0.51 0.38 0.28 0.23 0.15 0.13 0.13 0.04]
 샘플 임계값별 FPR:  [0. 0.017 0.06  0.103 0.179 0.248 0.316 0.573 0.667 0.735 1. ]
