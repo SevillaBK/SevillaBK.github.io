@@ -140,7 +140,7 @@ Dummy Classifier의 정확도:  0.8212
 
 `혼동행렬(Confusion Matrix)` 은 분류문제에서 예측 오류가 얼마나 되고, 어떤 유형의 오류가 발생하는지를 보여주는 행렬로 아래와 같은 배열을 가지고 있습니다.
 
-<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/confusion%20matrix.jpg?raw=true" width ="60%">
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/confusion%20matrix.jpg?raw=true" width ="50%">
 
 그 후, 학습셋과 검증데이터셋 전체를 다시 학습하여 테스트셋에 대해 예측을 수행합니다. 이를 통해 학습하지 않은 데이터에 대해서도 모델의 성능이 잘 나오는지 확인합니다.
 
