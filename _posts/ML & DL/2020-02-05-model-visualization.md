@@ -102,7 +102,7 @@ from keras.utils.vis_utils import model_to_dot
 SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
 ```
 
-<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/keras-visualization.png?raw=true" width =400>
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/keras-visualization.png?raw=true" width ="400">
 
 
 
