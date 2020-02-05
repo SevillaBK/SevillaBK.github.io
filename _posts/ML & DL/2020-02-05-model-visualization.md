@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '[케라스] 딥러닝 모델의 시각화'
-excerpt: 딥러닝모델 시각화에 대하 간단한 소개
+excerpt: 딥러닝모델 시각화에 대한 간단한 소개
 category: ML & DL
 tags:
   - 딥러닝
