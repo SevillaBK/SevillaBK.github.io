@@ -1,7 +1,7 @@
 ---
 layout: post
 title: '모델의 평가'
-excerpt: ML/DL 모델 학습을 위한 데이터셋 관련 개념 학습
+excerpt: 모델의 성능 평가에 사용되는 지표들으 알아보자
 category: ML & DL
 tags:
   - 사이킷런
