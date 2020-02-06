@@ -1,0 +1,221 @@
+---
+layout: post
+title: '[사이킷런] 데이터 인코딩'
+excerpt: 사이킷런에서 제공하는 인코딩 클래스 활용하기
+category: ML & DL
+tags:
+  - 사이킷런
+  - 데이터전처리
+  - one-hot encoding
+  - label encoding
+---
+
+머신러닝, 딥러닝 모델 알고리즘에서 인풋으로 들어가는 데이터는 대개 문자열 값을 입력값으로 허용하지 않습니다.<br/>이런 문자열 값은 숫자형으로 변환하여 모델이 인식할 수 있게 만들어야 합니다. 
+
+이번 포스팅에서는 사이킷런에서 이런 데이터 전처리 작업을 위해 제공하고 있는 일부 모듈에 대해 알아보겠습니다.
+
+
+
+#  데이터 인코딩
+
+### (1) Label Encoder
+
+`LabelEncoder`  클래스를 활용해서 카테고리형 피처를 숫자형으로 변환할 수 있습니다. `LabelEncoder` 클래스 객체를 생성하여 fit() , tranform() 함수를 사용하여 변환할 수 있습니다.
+
+```python
+from sklearn.preprocessing import LabelEncoder
+
+items = ['TV', '냉장고', '전자레인지', '컴퓨터', '선풍기', '선풍기', '믹서', '믹서']
+
+# LabelEncoder 객체 생성한 후, fit()과 transform()으로 인코딩 수행
+encoder = LabelEncoder()
+# 카테고리값 학습
+encoder.fit(items)
+# 변환 대상 변환
+labels = encoder.transform(items)
+print('인코딩 변화값: ', labels)
+```
+
+```
+# 출력:
+인코딩 변화값: [0 1 4 5 3 3 2 2]
+```
+
+```python
+# fit_transform을 사용해 학습과 변환을 동시에 수행할 수도 있습니다.
+items = ['TV', '냉장고', '전자레인지', '컴퓨터', '선풍기', '선풍기', '믹서', '믹서']
+labels = encoder.fit_transform(items)
+print('인코딩 변화값: ', labels)
+```
+
+```
+# 출력:
+인코딩 변화값: [0 1 4 5 3 3 2 2]
+```
+
+위의 코드를 보면 TV는 0, 냉장고는 1, 믹서는 2, 선풍기는 3, 전자레인지는 4, 컴퓨터는 5로 변환되었습니다. 이처럼 데이터가 적을 경우에는 원 값과 변화된 값을 쉽게 알 수 있지만, 카테고리 값이 많은 경우에는 어렵습니다. 
+
+이 때, `classes_` 를 학습한 인코더 객체에 사용하면 변환된 값에 대한 원본값을 확인할 수 있습니다.
+
+```python
+print('인코당 클래스: ', encoder.classes_)
+```
+
+```
+# 출력:
+인코딩 클래스 : ['TV', '냉장고', '전자레인지', '컴퓨터', '선풍기', '선풍기', '믹서', '믹서']
+```
+
+그리고 `inverse_transform()` 으로 인코딩 값을 다시 디코딩할 수 있습니다.
+
+```python
+print('디코딩으로 얻은 원본 값: ', encoder.inverse_transform([0, 1, 4, 5, 3, 3, 2, 2]))
+```
+
+```
+# 출력:
+디코딩으로 얻은 원본 값:  ['TV' '냉장고' '전자레인지' '컴퓨터' '선풍기' '선풍기' '믹서' '믹서']
+```
+
+##### 라벨 인코딩의 단점
+
+`LabelEncoder` 는 일괄적인 숫자 값으로 변환이 되면서 몇몇 알고리즘에는 예측 성능이 떨어지는 경우가 발생합니다. 변환된 숫자의 크기는 사실상 아무 의미가 없는데 모델은 어떤 의미가 있는 것으로 학습할 수 있기 때문입니다. 때문에 회귀모델의 경우에는 성능을 떨어뜨릴 수 있습니다.
+
+
+
+
+### (2) OneHotEncoder
+
+위에서 언급된 라벨 인코딩의 단점을 극복할 수 있는 것이 `원핫인코딩(One-hot-encoding)` 입니다. 피처 값의 유형 수에 따라 새로운 피처를 추가해 고유 값에 해당하는 피처에만 1을 표시하고 나머지는 0으로 표시하는 방법입니다.
+
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/one-hot-encoder.png?raw=true">
+
+사이킷런에서는 `OneHotEncoder` 클래스로 쉽게 원핫인코딩을 수행할 수 있습니다. 다만, 변환 전에 문자열 값을 숫자형 값으로 변환을 먼저 해주어야 합니다. 그리고 입력값은 2차원 데이터여야 합니다.
+
+```python
+from sklearn.preprocessing import OneHotEncoder, LabelEncoder
+import numpy as np
+
+items = ['TV', '냉장고', '전기레인지', '컴퓨터', '선풍기', '선풍기', '믹서', '믹서']
+
+# 문자열 값을 먼저 숫자형으로 변환
+encoder = LabelEncoder()
+encoder.fit(items)
+labels = encoder.transform(items)
+# 2차원 데이터로 변환
+labels = labels.reshape(-1, 1)
+labels 
+```
+
+```
+# 출력:
+array([[0],
+       [1],
+       [4],
+       [5],
+       [3],
+       [3],
+       [2],
+       [2]])
+```
+
+```python
+# 원핫인코딩을 적용
+oh_encoder = OneHotEncoder(categories='auto')
+oh_encoder.fit(labels)
+oh_labels = oh_encoder.transform(labels)
+print('원-핫 인코딩 데이터')
+print(oh_labels.toarray())
+print('\n원-핫 인코딩 데이터 차원')
+print(oh_labels.shape)
+```
+
+```
+# 출력: 
+원-핫 인코딩 데이터
+[[1. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 1. 0. 0.]
+ [0. 0. 1. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0.]]
+
+원-핫 인코딩 데이터 차원
+(8, 6)
+```
+
+```python
+# 역시 fit_transform을 사용해 학습과 변환을 동시에 수행할 수도 있습니다.
+oh_encoder = OneHotEncoder(categories='auto')
+oh_labels = oh_encoder.fit_transform(labels)
+print('원-핫 인코딩 데이터')
+print(oh_labels.toarray())
+```
+
+```
+# 출력:
+원-핫 인코딩 데이터
+[[1. 0. 0. 0. 0. 0.]
+ [0. 1. 0. 0. 0. 0.]
+ [0. 0. 0. 0. 1. 0.]
+ [0. 0. 0. 0. 0. 1.]
+ [0. 0. 0. 1. 0. 0.]
+ [0. 0. 0. 1. 0. 0.]
+ [0. 0. 1. 0. 0. 0.]
+ [0. 0. 1. 0. 0. 0.]]
+```
+
+
+
+위와 같이 사이킷런의 `OneHotEncoder` 외에도 판다스에서 제공하는 `get_dummies()` 를 사용하면 편리하게 원핫인코딩을 수행할 수 있습니다. 이 기능을 사용하면 문자열 카테고리 값을 숫자형으로 변환할 필요없이 바로 변환할 수 있습니다.
+
+```python
+import pandas as pd
+
+# 캐글 타이타닉 예제 데이터 불러오기
+data = pd.read_csv('Titanic/input/train.csv')
+data = data[['PassengerId', 'Survived', 'Pclass', 'Age', 'Embarked']].head(10)
+data
+```
+
+|      | PassengerId | Survived | Pclass |  Age | Embarked |
+| ---: | ----------: | -------: | -----: | ---: | -------- |
+|    0 |           1 |        0 |      3 | 22.0 | S        |
+|    1 |           2 |        1 |      1 | 38.0 | C        |
+|    2 |           3 |        1 |      3 | 26.0 | S        |
+|    3 |           4 |        1 |      1 | 35.0 | S        |
+|    4 |           5 |        0 |      3 | 35.0 | S        |
+|    5 |           6 |        0 |      3 |  NaN | Q        |
+|    6 |           7 |        0 |      1 | 54.0 | S        |
+|    7 |           8 |        0 |      3 |  2.0 | S        |
+|    8 |           9 |        1 |      3 | 27.0 | S        |
+|    9 |          10 |        1 |      2 | 14.0 | C        |
+
+```python
+# Embarked 피처에 대한 원핫 인코딩 수행하기
+data = pd.get_dummies(data, columns = ['Embarked'], prefix = ['Embarked'])
+data
+```
+
+|      | PassengerId | Survived | Pclass |  Age | Embarked_C | Embarked_Q | Embarked_S |
+| ---: | ----------: | -------: | -----: | ---: | ---------: | ---------: | ---------: |
+|    0 |           1 |        0 |      3 | 22.0 |          0 |          0 |          1 |
+|    1 |           2 |        1 |      1 | 38.0 |          1 |          0 |          0 |
+|    2 |           3 |        1 |      3 | 26.0 |          0 |          0 |          1 |
+|    3 |           4 |        1 |      1 | 35.0 |          0 |          0 |          1 |
+|    4 |           5 |        0 |      3 | 35.0 |          0 |          0 |          1 |
+|    5 |           6 |        0 |      3 |  NaN |          0 |          1 |          0 |
+|    6 |           7 |        0 |      1 | 54.0 |          0 |          0 |          1 |
+|    7 |           8 |        0 |      3 |  2.0 |          0 |          0 |          1 |
+|    8 |           9 |        1 |      3 | 27.0 |          0 |          0 |          1 |
+|    9 |          10 |        1 |      2 | 14.0 |          1 |          0 |          0 |
+
+
+
+---------
+
+###### Reference
+
+- 파이썬 머신러닝 완벽가이드
