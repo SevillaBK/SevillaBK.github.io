@@ -35,7 +35,7 @@ Decision Tree는 기본적으로 세 가지 노드( `루트노드, 리프노드,
 
 <img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/2020-03-10-titanic-decision-tree.png?raw=true">
 
-위의 그림(출처: https://bigwhalelearning.wordpress.com/2014/11/27/77/)은 캐글 타이타닉 예제를 통해 Decision Tree의 구조를 간략히 나타낸 것으로 아래와 같이 노드를 분류할 수 있습니다.
+위의 그림[( 출처: https://bigwhalelearning.wordpress.com/2014/11/27/77/ )](https://bigwhalelearning.wordpress.com/2014/11/27/77/)은 캐글 타이타닉 예제를 통해 Decision Tree의 구조를 간략히 나타낸 것으로 아래와 같이 노드를 분류할 수 있습니다.
 
 * **Is Passenger Male?**  →  루트노드
 * **Age < 18**, **3rd Class?**, **Embarked from Southhampton?** → 규칙노드
@@ -72,19 +72,13 @@ Decision Tree에서 노드들을 많이 생성하여 규칙들을 만들어내�
 
 * **min_samples_split**
 
-  - 노드를 분할하기 위한 최소한의 샘플 데이터수
-
-    → 과적합을 제어하는데 사용합니다. 값이 작을수록 분할노드가 많아져 과적합 가능성 증가
-
+  - 노드를 분할하기 위한 최소한의 샘플 데이터수<br/>→ 과적합을 제어하는데 사용합니다. 값이 작을수록 분할노드가 많아져 과적합 가능성 증가
   - default : 2 
 
   
 
 * **min_samples_leaf**
-
-  - 리프노드가 되기 위한 최소한의 샘플 데이터수
-
-    → 과적합을 제어하는데 사용합니다. 값이 작을수록 과적합 가능성 증가
+  - 리프노드가 되기 위한 최소한의 샘플 데이터수<br/>→ 과적합을 제어하는데 사용합니다. 값이 작을수록 과적합 가능성 증가
 
   - default : 1 
 
@@ -103,13 +97,8 @@ Decision Tree에서 노드들을 많이 생성하여 규칙들을 만들어내�
 
 
 * **max_depth**
-
   - 트리의 최대 깊이
-
-  - default : None
-
-    → 완벽하게 클래스 값이 결정될 때까지 분할<br/>    또는 데이터 갯수가 min_samples_split보다 작아질 때까지 분할
-
+  - default : None<br/>→ 완벽하게 클래스 값이 결정될 때까지 분할<br/>    또는 데이터 갯수가 min_samples_split보다 작아질 때까지 분할
   - 깊이가 깊어지면 과적합될 수 있으므로 적절히 제어 필요
 
 
@@ -294,3 +283,100 @@ petal width (cm): 0.436
 ```
 
 <img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/2020-03-10-titanic-decision-tree-6.png?raw=true">
+
+
+
+## Decision Tree의 과적합(Overfitting)
+
+#### 임의의 데이터 셋를 통한 과적합 문제 시각화
+
+```python
+from sklearn.datasets import make_classification
+import matplotlib.pyplot as plt
+
+plt.title("3 Class values with 2 Features Sample Data Creation")
+
+# 2차원 시각화를 위해 피처 2개, 클래스는 3가지 유형의 샘플 데이터 생성
+X_features, y_labels = make_classification(n_features = 2, 
+                                           n_redundant = 0,
+                                           n_informative = 2,
+                                           n_classes = 3,
+                                           n_clusters_per_class = 1,
+                                           random_state = 0)
+
+# 그래프 형태로 2개의 피처로 2차원 좌표 시각화, 각 클래스 값은 다른 색으로 표시
+plt.scatter(X_features[:, 0], X_features[:, 1],
+            marker = 'o',
+            c = y_labels,
+            s = 25, 
+            edgecolor = 'k',
+            cmap='rainbow')
+plt.show()
+```
+
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/2020-03-10-titanic-decision-tree-7.png?raw=true">
+
+우선 트리 생성 시 파라미터를 디폴트로 놓고, 데이터가 어떻게 분류되는지 확인해보겠습니다.
+
+```python
+# Classifier의 Decision Boundary를 시각화 하는 함수
+def visualize_boundary(model, X, y):
+    fig, ax = plt.subplots()
+    
+    # 학습 데이타 scatter plot으로 나타내기
+    ax.scatter(X[:, 0], X[:, 1], c=y, s=25, cmap='rainbow', edgecolor='k',
+               clim=(y.min(), y.max()), zorder=3)
+    ax.axis('tight')
+    ax.axis('off')
+    xlim_start , xlim_end = ax.get_xlim()
+    ylim_start , ylim_end = ax.get_ylim()
+    
+    # 호출 파라미터로 들어온 training 데이타로 model 학습 . 
+    model.fit(X, y)
+    # meshgrid 형태인 모든 좌표값으로 예측 수행
+    xx, yy = np.meshgrid(np.linspace(xlim_start,xlim_end, num=200),
+                         np.linspace(ylim_start,ylim_end, num=200))
+    Z = model.predict(np.c_[xx.ravel(), yy.ravel()]).reshape(xx.shape)
+    
+    # contourf() 를 이용하여 class boundary 를 visualization 수행. 
+    n_classes = len(np.unique(y))
+    contours = ax.contourf(xx, yy, Z, alpha=0.3,
+                           levels=np.arange(n_classes + 1) - 0.5,
+                           cmap='rainbow', clim=(y.min(), y.max()),
+                           zorder=1)
+```
+
+```python
+# 특정한 트리 생성에 제약이 없는(전체 default 값) Decision Tree의 학습과 결정 경계 시각화
+dt_clf = DecisionTreeClassifier()
+visualize_boundary(dt_clf, X_features, y_labels)
+```
+
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/2020-03-10-titanic-decision-tree-8.png?raw=true">
+
+위의 경우 매우 얇은 영역으로 나타난 부분은 이상치에 해당하는데, 이런 이상치까지 모두 분류하기 위해 분할한 결과 결정 기준 경계가 많아졌습니다. 이런 경우 조금만 형태가 다른 데이터가 들어와도 정확도가 매우 떨어지게 됩니다.
+
+```python
+# min_samples_leaf = 6 으로 설정한 Decision Tree의 학습과 결정 경계 시각화
+dt_clf = DecisionTreeClassifier(min_samples_leaf=6)
+visualize_boundary(dt_clf, X_features, y_labels)
+```
+
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/2020-03-10-titanic-decision-tree-9.png?raw=true">
+
+Default 값으로 실행한 앞선 경우보다 이상치에 크게 반응하지 않으면서 일반화된 분류 규칙에 의해 분류되었음을 확인할 수 있습니다.
+
+
+
+#### Decision Tree의 과적합을 줄이기 위한 파라미터 튜닝
+
+(1) **max_depth** 를 줄여서 트리의 깊이 제한<br/>(2) **min_samples_split** 를 높여서 데이터가 분할하는데 필요한 샘플 데이터의 수를 높이기<br/>(3) **min_samples_leaf** 를 높여서 말단 노드가 되는데 필요한 샘플 데이터의 수를 높이기<br/>(4) **max_features** 를 제한하여 분할을 하는데 고려하는 피처의 수 제한
+
+
+
+---------
+
+###### Reference
+
+- 파이썬 머신러닝 완벽가이드
+- https://bigwhalelearning.wordpress.com/2014/11/27/77/
