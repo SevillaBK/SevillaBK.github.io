@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 'DecisionTree(결정트리) 개괄과 사이킷런에서의 활용'
+title: '[사이킷런] DecisionTree(결정트리) 개괄과 사이킷런에서의 활용'
 excerpt: DecisionTree의 기초적인 내용을 이해하고, 사이킷런에서 실행해보기
 category: ML & DL
 tags:
