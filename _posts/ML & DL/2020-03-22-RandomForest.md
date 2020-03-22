@@ -33,8 +33,6 @@ tags:
 
 <img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/2020-03-17-RandomForest-1.png?raw=true">
 
-<이미지 출처 : https://www.researchgate.net/publication/322179244_Data_Mining_Accuracy_and_Error_Measures_for_Classification_and_Prediction >
-
 
 
 ## 랜덤포레스트(RandomForest)
@@ -43,7 +41,6 @@ tags:
 
 <img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/2020-03-17-RandomForest-2.png?raw=true">
 
-<이미지 출처 : https://pvsmt99345.i.lithium.com/t5/image/serverpage/image-id/33046iB8743F7094DB9C87/image-size/large?v=1.0&px=999 >
 
 
 
@@ -230,7 +227,7 @@ print('최고 예측 정확도: {:.4f}'.format(grid_cv.best_score_))
 최고 예측 정확도: 0.9193
 ```
 
-max_depth : 12 , min_samples_leaf : 12 , min_samples_split : 8 , n_estimators : 100 일 때, 정확도가 91.93%로 츨정되었습니다.
+max_depth : 12 , min_samples_leaf : 12 , min_samples_split : 8 , n_estimators : 100 일 때, 정확도가 91.93%로 측정되었습니다.
 
 이번에는 이 파라미터로 RandomForestClassifier를 다시 학습시킨 뒤, 별도의 데이터셋에서 예측성능을 측정해보겠습니다.
 
@@ -255,7 +252,7 @@ print('예측 정확도: {:.4f}'.format(accuracy_score(y_test,pred)))
 
 
 
-#### 랜덤포레스트의 각 피처 중요도 시각화 : feature_importances_
+## 랜덤포레스트의 각 피처 중요도 시각화 : feature_importances_
 
 max_depth : 12 , min_samples_leaf : 12 , min_samples_split : 8 , n_estimators : 100 일 때,  어떤 피처가 크게 영향을 미쳤는지 보기 위해 feature importance를 시각화해보겠습니다.
 
@@ -283,3 +280,5 @@ plt.show()
 ###### Reference
 
 - 파이썬 머신러닝 완벽가이드
+- https://www.researchgate.net/publication/322179244_Data_Mining_Accuracy_and_Error_Measures_for_Classification_and_Prediction
+- https://pvsmt99345.i.lithium.com/t5/image/serverpage/image-id/33046iB8743F7094DB9C87/image-size/large?v=1.0&px=999 
