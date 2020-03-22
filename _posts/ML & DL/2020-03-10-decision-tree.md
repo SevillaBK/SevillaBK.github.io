@@ -377,7 +377,7 @@ Default 값으로 실행한 앞선 경우보다 이상치에 크게 반응하지
 
 #### 사용자 행동 인식 데이터 셋
 
-[데이터셋 다운로드 링크]('https://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones')
+[https://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones]("https://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones")
 
 30명에게 스마트폰 센서를 장착한 뒤 사람의 동작과 관련된 여러가지 피처를 수집한 데이터셋입니다. 이 데이터로 어떤 동작인지를 예측하는 모델을 만들어보겠습니다.
 
@@ -539,8 +539,7 @@ GridSearchCV 최적 하이퍼파라미터:  {'max_depth': 16}
 
 <img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/2020-03-22-Human-dataset-2.png?raw=true">
 
-Decision Tree의 max_depth가 커진다고 해서 테스트 데이터셋의 정확도가 올라가지는 않습니다. <br/>이번 케이스의 경우에는 max_depth = 16 일 때 가장 높습니다.
-→ max_depth를 너무 크게 설정하면 과적합으로 인해 성능이 오히려 하락하게 됩니다.
+Decision Tree의 max_depth가 커진다고 해서 테스트 데이터셋의 정확도가 올라가지는 않습니다. <br/>이번 케이스의 경우에는 max_depth = 16 일 때 가장 높습니다.<br/>→ max_depth를 너무 크게 설정하면 과적합으로 인해 성능이 오히려 하락하게 됩니다.
 
 ```python
 # GridSearch가 아닌 별도의 테스트 데이터셋에서 max_depth별 성능 측정
