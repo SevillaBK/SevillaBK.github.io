@@ -616,7 +616,7 @@ max_depth = 8, min_samples_split = 16으로 예측을 수행한 결과, 정확�
 
 
 
-#### Decision Tree의 각 피처의 중요도 시각화 : feature_importances_
+## Decision Tree의 각 피처의 중요도 시각화 : feature_importances_
 
 max_depth = 8, min_samples_split = 16일 때, 어떤 피처가 크게 영향을 미쳤는지 보기 위해 feature importance를 시각화해보겠습니다.
 
