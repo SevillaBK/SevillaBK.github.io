@@ -6,6 +6,7 @@ category: ML & DL
 tags:
   - 사이킷런
   - DecisionTree
+
 ---
 
 
@@ -73,9 +74,9 @@ Decision Tree에서 노드들을 많이 생성하여 규칙들을 만들어내�
 
   - 노드를 분할하기 위한 최소한의 샘플 데이터수<br/>→ 과적합을 제어하는데 사용합니다. 값이 작을수록 분할노드가 많아져 과적합 가능성 증가
   - default : 2 
+
   
-  
-  
+
 * **min_samples_leaf**
 
   - 리프노드가 되기 위한 최소한의 샘플 데이터수<br/>→ 과적합을 제어하는데 사용합니다. 값이 작을수록 과적합 가능성 증가
@@ -369,6 +370,273 @@ Default 값으로 실행한 앞선 경우보다 이상치에 크게 반응하지
 #### Decision Tree의 과적합을 줄이기 위한 파라미터 튜닝
 
 (1) **max_depth** 를 줄여서 트리의 깊이 제한<br/>(2) **min_samples_split** 를 높여서 데이터가 분할하는데 필요한 샘플 데이터의 수를 높이기<br/>(3) **min_samples_leaf** 를 높여서 말단 노드가 되는데 필요한 샘플 데이터의 수를 높이기<br/>(4) **max_features** 를 제한하여 분할을 하는데 고려하는 피처의 수 제한
+
+
+
+## Decision Tree 실습 
+
+#### 사용자 행동 인식 데이터 셋
+
+[데이터셋 다운로드 링크]('https://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones')
+
+30명에게 스마트폰 센서를 장착한 뒤 사람의 동작과 관련된 여러가지 피처를 수집한 데이터셋입니다. 이 데이터로 어떤 동작인지를 예측하는 모델을 만들어보겠습니다.
+
+* **feature_info.txt** 와 **README.txt** : 데이터셋과 피처에 대한 간략한 설명
+* **feature.txt** : 피처의 이름
+* **activity_labels.txt** : 동작 레이블 값에 대한 설명
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+import warnings
+warnings.filterwarnings('ignore')
+```
+
+```python
+# human activity 데이터 세트에 중복된 Feature명으로 인해 판다스 0.25버전 이상에서 
+# Duplicate name 에러가 발생하여 feature 이름을 수정하는 함수 설정
+def get_new_feature_name_df(old_feature_name_df):
+    feature_dup_df = pd.DataFrame(data=old_feature_name_df.groupby('column_name').cumcount(), columns=['dup_cnt'])
+    feature_dup_df = feature_dup_df.reset_index()
+    new_feature_name_df = pd.merge(old_feature_name_df.reset_index(), feature_dup_df, how='outer')
+    new_feature_name_df['column_name'] = new_feature_name_df[['column_name', 'dup_cnt']].apply(lambda x : x[0]+'_'+str(x[1]) 
+                                                                                           if x[1] >0 else x[0] ,  axis=1)
+    new_feature_name_df = new_feature_name_df.drop(['index'], axis=1)
+    return new_feature_name_df
+```
+
+```python
+# 데이터셋을 구성하는 함수 설정
+def get_human_dataset():
+    
+    # 각 데이터 파일들은 공백으로 분리되어 있으므로 read_csv에서 공백문자를 sep으로 할당
+    feature_name_df = pd.read_csv('human_activity/features.txt', sep='\s+',
+                                                     header=None, names=['column_index', 'column_name'])
+    
+    # 중복된 피처명을 수정하는 get_new_feature_name_df()를 이용하여 새로운 feature명 데이터프레임 생성
+    new_feature_name_df = get_new_feature_name_df(feature_name_df)
+    
+    # 데이터프레임에 피처명을 컬럼으로 뷰여하기 위해 리스트 객체로 다시 반환
+    feature_name = new_feature_name_df.iloc[:, 1].values.tolist()
+    
+    # 학습 피처 데이터세트와 테스트 피처 데이터를 데이터프레임으로 로딩
+    # 컬럼명은 feature_name 적용
+    X_train = pd.read_csv('human_activity/train/X_train.txt', sep='\s+', names=feature_name)
+    X_test = pd.read_csv('human_activity/test/X_test.txt', sep='\s+', names=feature_name)
+    
+    # 학습 레이블과 테스트 레이블 데이터를 데이터 프레임으로 로딩, 컬럼명은 action으로 부여
+    y_train = pd.read_csv('human_activity/train/y_train.txt', sep='\s+', names=['action'])
+    y_test = pd.read_csv('human_activity/test/y_test.txt', sep='\s+', names=['action'])
+    
+    # 로드된 학습/테스트용 데이터프레임을 모두 반환
+    return X_train, X_test, y_train, y_test
+```
+
+```python
+X_train, X_test, y_train, y_test = get_human_dataset()
+print('## 학습 피처 데이터셋 info()')
+X_train.info()
+```
+
+```
+# 출력:
+## 학습 피처 데이터셋 info()
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 7352 entries, 0 to 7351
+Columns: 561 entries, tBodyAcc-mean()-X to angle(Z,gravityMean)
+dtypes: float64(561)
+memory usage: 31.5 MB
+```
+
+학습 데이터셋은 7352개의 레코드와 561개의 피처를 가지고 있습니다.
+
+```python
+X_train.head(3)
+```
+
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/2020-03-22-Human-dataset-1.png?raw=true">
+
+```python
+y_train['action'].value_counts()
+```
+
+```
+# 출력:
+6    1407
+5    1374
+4    1286
+1    1226
+2    1073
+3     986
+Name: action, dtype: int64
+```
+
+레이블 값은 1, 2, 3, 4, 5, 6의 값을 가지고 있으며 고르게 분포되어 있습니다.
+
+
+
+#### DecisionTreeClassifier 파라미터를 default로 예측 수행 
+
+```python
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
+
+# 예제 반복시마다 동일한 결과 도출을 위해 난수값(random_state) 설정
+dt_clf = DecisionTreeClassifier(random_state = 156)
+dt_clf.fit(X_train, y_train)
+pred = dt_clf.predict(X_test)
+accuracy = accuracy_score(y_test, pred)
+print('DecisionTree 예측 정확도 : {0:.4f}'.format(accuracy))
+
+# DecisionTreeClassifier의 하이퍼파라미터 추출
+print('\nDecisionTreeClassifier 기본 하이퍼파라미터: \n', dt_clf.get_params())
+```
+
+```
+# 출력:
+DecisionTree 예측 정확도 : 0.8548
+
+DecisionTreeClassifier 기본 하이퍼파라미터: 
+ {'ccp_alpha': 0.0, 'class_weight': None, 'criterion': 'gini', 'max_depth': None, 'max_features': None, 'max_leaf_nodes': None, 'min_impurity_decrease': 0.0, 'min_impurity_split': None, 'min_samples_leaf': 1, 'min_samples_split': 2, 'min_weight_fraction_leaf': 0.0, 'presort': 'deprecated', 'random_state': 156, 'splitter': 'best'}
+```
+
+모든 파라미터를 default로 두고 학습한 결과 85.48%의 정확도를 기록했습니다.
+
+
+
+#### DecisionTree의 max_depth가 정확도에 주는 영향
+
+```python
+from sklearn.model_selection import GridSearchCV
+
+params = {'max_depth' : [6, 8, 10, 12, 16, 20, 24]}
+
+grid_cv = GridSearchCV(dt_clf, 
+                       param_grid = params,
+                       scoring = 'accuracy', 
+                       cv = 5, 
+                       verbose = 1)
+grid_cv.fit(X_train, y_train)
+print('GridSearchCV 최고 평균 정확도 수치: {:.4f}'.format(grid_cv.best_score_))
+print('GridSearchCV 최적 하이퍼파라미터: ', grid_cv.best_params_)
+
+# GridSearchCV 객체의 cv_results_ 속성을 데이터프레임으로 생성
+scores_df = pd.DataFrame(grid_cv.cv_results_)
+scores_df[['rank_test_score', 'params','mean_test_score',  'split0_test_score',
+           'split1_test_score', 'split2_test_score', 'split3_test_score', 'split4_test_score']]
+```
+
+```
+# 출력:
+Fitting 5 folds for each of 7 candidates, totalling 35 fits
+[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done  35 out of  35 | elapsed:  1.4min finished
+GridSearchCV 최고 평균 정확도 수치: 0.8513
+GridSearchCV 최적 하이퍼파라미터:  {'max_depth': 16}
+```
+
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/2020-03-22-Human-dataset-2.png?raw=true">
+
+Decision Tree의 max_depth가 커진다고 해서 테스트 데이터셋의 정확도가 올라가지는 않습니다. <br/>이번 케이스의 경우에는 max_depth = 16 일 때 가장 높습니다.
+→ max_depth를 너무 크게 설정하면 과적합으로 인해 성능이 오히려 하락하게 됩니다.
+
+```python
+# GridSearch가 아닌 별도의 테스트 데이터셋에서 max_depth별 성능 측정
+max_depths = [6, 8, 10, 12, 16, 20, 24]
+
+for depth in max_depths:
+    dt_clf = DecisionTreeClassifier(max_depth=depth, random_state=156)
+    dt_clf.fit(X_train, y_train)
+    pred = dt_clf.predict(X_test)
+    accuracy = accuracy_score(y_test, pred)
+    print('max_depth = {0} 정확도 : {1:.4f}'.format(depth, accuracy))
+```
+
+```
+# 출력:
+max_depth = 6 정확도 : 0.8558
+max_depth = 8 정확도 : 0.8707
+max_depth = 10 정확도 : 0.8673
+max_depth = 12 정확도 : 0.8646
+max_depth = 16 정확도 : 0.8575
+max_depth = 20 정확도 : 0.8548
+max_depth = 24 정확도 : 0.8548
+```
+
+이 경우에는 max_depth = 8 일 때 가장 높은 정확도를 나타냅니다. 위의 결과에서 볼 수 있듯이 max_depth가 너무 커지면 과적합에 빠져 성능이 떨어지게 됩니다. 즉, 너무 복잡한 모델보다 깊이를 낮춘 단순한 모델이 효과적일 수 있습니다.
+
+
+
+#### Decision Tree의 max_depth와 min_samples_split 를 같이 변경하며 성능 튜닝
+
+```python
+params = {
+    'max_depth' : [6, 8, 10, 12, 16, 20, 24],
+    'min_samples_split' : [16, 24]
+}
+
+grid_cv = GridSearchCV(dt_clf, param_grid=params, scoring='accuracy', cv=5, verbose=1)
+grid_cv.fit(X_train, y_train)
+print('GridSearchCV 최고 평균 정확도 수치: {:.4f}'.format(grid_cv.best_score_))
+print('GridSearchCV 최적 하이퍼파라미터: ', grid_cv.best_params_)
+
+# GridSearchCV 객체의 cv_results_ 속성을 데이터 프레임으로 생성
+scores_df = pd.DataFrame(grid_cv.cv_results_)
+scores_df[['rank_test_score', 'params', 'mean_test_score',  'split0_test_score', 
+           'split1_test_score', 'split2_test_score', 'split3_test_score', 'split4_test_score']]
+```
+
+```
+# 출력:
+Fitting 5 folds for each of 14 candidates, totalling 70 fits
+[Parallel(n_jobs=1)]: Using backend SequentialBackend with 1 concurrent workers.
+[Parallel(n_jobs=1)]: Done  70 out of  70 | elapsed:  2.9min finished
+GridSearchCV 최고 평균 정확도 수치: 0.8549
+GridSearchCV 최적 하이퍼파라미터:  {'max_depth': 8, 'min_samples_split': 16}
+```
+
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/2020-03-22-Human-dataset-3.png?raw=true">
+
+두 파라미터를 함께 사용하여 GridSearch를 수행한 결과, max_depth = 8, min_samples_split = 16일 때 평균 정확도 85.5% 정도로 가장 높은 수치를 나타냈습니다. 이 때의 파라미터를 적용하여 예측을 수행해보겠습니다.
+
+```python
+best_df_clf = grid_cv.best_estimator_
+pred1 = best_df_clf.predict(X_test)
+accuracy = accuracy_score(y_test, pred1)
+print('Desicion Tree 예측 정확도: {0:.4f}'.format(accuracy))
+```
+
+```
+# 출력:
+Desicion Tree 예측 정확도: 0.8717
+```
+
+max_depth = 8, min_samples_split = 16으로 예측을 수행한 결과, 정확도 87.17%의 정확도로 default로 수행한 것보다 향상된 성능을 보입니다.
+
+
+
+#### Decision Tree의 각 피처의 중요도 시각화 : feature_importances_
+
+max_depth = 8, min_samples_split = 16일 때, 어떤 피처가 크게 영향을 미쳤는지 보기 위해 feature importance를 시각화해보겠습니다.
+
+```python
+import seaborn as sns
+
+feature_importance_values = best_df_clf.feature_importances_
+# Top 중요도로 정렬하고, 쉽게 시각화하기 위해 Series 변환
+feature_importances = pd.Series(feature_importance_values, index=X_train.columns)
+# 중요도값 순으로 Series를 정렬
+feature_top20 = feature_importances.sort_values(ascending=False)[:20]
+
+plt.figure(figsize=[8, 6])
+plt.title('Feature Importances Top 20')
+sns.barplot(x=feature_top20, y=feature_top20.index)
+plt.show()
+```
+
+<img src = "https://github.com/SevillaBK/SevillaBK.github.io/blob/master/img/ML&DL/2020-03-22-Human-dataset-4.png?raw=true">
 
 
 
