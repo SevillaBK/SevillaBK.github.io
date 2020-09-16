@@ -340,20 +340,6 @@ print(a)
 1
 ```
 
-```python
-# str를 int로 변경 
-a = "1"
-a = int(a)
-print(type(a))
-print(a)
-```
-
-```
-<class 'int'>
-1
-```
-
-
 ----------
 
 ##### Reference
