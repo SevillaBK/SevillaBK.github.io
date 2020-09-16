@@ -294,6 +294,66 @@ print(a)
 
 
 
+## 변수 데이터 타입의 변경
+
+아래와 같이 변수의 데이터 타입을 간단하게 변경할 수 있습니다.
+
+```python
+# int를 float로 변경
+a = 3 
+a = float(a)
+print(type(a))
+print(a)
+```
+
+```
+# 출력:
+<class 'float'>
+3.0
+```
+
+```python
+# float를 int로 변경 : 이 때, 소수점은 버려집니다.
+a = 3.6
+a = int(a)
+print(type(a))
+print(a)
+```
+
+```
+# 출력:
+<class 'int'>
+3
+```
+
+```python
+# int를 str로 변경 
+a = 1
+a = str(a)
+print(type(a))
+print(a)
+```
+
+```
+# 출력:
+<class 'str'>
+1
+```
+
+```python
+# str를 int로 변경 
+a = "1"
+a = int(a)
+print(type(a))
+print(a)
+```
+
+```
+<class 'int'>
+1
+```
+
+
 ----------
 
 ##### Reference
